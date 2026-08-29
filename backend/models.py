@@ -17,6 +17,7 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     transactions = relationship("Transaction", back_populates="owner")
+    loan_applications = relationship("LoanApplication", back_populates="applicant", foreign_keys="LoanApplication.user_id")
 
 
 class Transaction(Base):
@@ -32,3 +33,21 @@ class Transaction(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     owner = relationship("User", back_populates="transactions")
+
+
+class LoanApplication(Base):
+    __tablename__ = "loan_applications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    amount = Column(Float)
+    purpose = Column(String)
+    description = Column(String, nullable=True)
+    duration_months = Column(Integer, default=12)
+    status = Column(String, default="pending")  # pending, approved, rejected
+    admin_notes = Column(String, nullable=True)
+    reviewed_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    reviewed_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    applicant = relationship("User", back_populates="loan_applications", foreign_keys=[user_id])

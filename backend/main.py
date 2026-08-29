@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
-from routes import auth, transactions, dashboard, bank
+from routes import auth, transactions, dashboard, bank, loans
 from seed import seed_data
 
 Base.metadata.create_all(bind=engine)
@@ -20,6 +20,7 @@ app.include_router(auth.router)
 app.include_router(transactions.router)
 app.include_router(dashboard.router)
 app.include_router(bank.router)
+app.include_router(loans.router)
 
 
 @app.on_event("startup")

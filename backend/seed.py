@@ -1,6 +1,6 @@
-from datetime import date
+from datetime import date, datetime
 from database import SessionLocal
-from models import User, Transaction
+from models import User, Transaction, LoanApplication
 from auth import get_password_hash
 
 
@@ -234,7 +234,52 @@ def seed_data():
     db.add_all(transactions)
     db.commit()
 
-    print(f"Created {len(users)} users and {len(transactions)} transactions")
+    loans = [
+        LoanApplication(
+            user_id=1, amount=500000, purpose="Working Capital",
+            description="Need working capital for expanding product inventory ahead of holiday season",
+            duration_months=12, status="approved", admin_notes="Strong cash flow, low risk. Approved.",
+            reviewed_by=2, reviewed_at=datetime(2026, 8, 20),
+        ),
+        LoanApplication(
+            user_id=3, amount=200000, purpose="Equipment Purchase",
+            description="Purchase new commercial kitchen equipment for food preparation",
+            duration_months=6, status="pending",
+        ),
+        LoanApplication(
+            user_id=4, amount=1000000, purpose="Branch Expansion",
+            description="Open second restaurant location in downtown area",
+            duration_months=24, status="approved", admin_notes="Excellent revenue growth. Approved for expansion.",
+            reviewed_by=2, reviewed_at=datetime(2026, 8, 18),
+        ),
+        LoanApplication(
+            user_id=5, amount=2000000, purpose="Inventory Purchase",
+            description="Bulk purchase of electronics inventory for upcoming holiday season",
+            duration_months=12, status="pending",
+        ),
+        LoanApplication(
+            user_id=7, amount=800000, purpose="Factory Upgrade",
+            description="Upgrade manufacturing machinery to increase production capacity",
+            duration_months=18, status="rejected", admin_notes="Thin profit margins, high existing expenses. Rejected.",
+            reviewed_by=2, reviewed_at=datetime(2026, 8, 15),
+        ),
+        LoanApplication(
+            user_id=9, amount=300000, purpose="Seasonal Purchase",
+            description="Purchase seeds and fertilizers for next planting season",
+            duration_months=9, status="pending",
+        ),
+        LoanApplication(
+            user_id=10, amount=500000, purpose="Renovation",
+            description="Renovate hotel rooms to attract more customers",
+            duration_months=12, status="rejected", admin_notes="Negative balance, high risk. Cannot approve.",
+            reviewed_by=2, reviewed_at=datetime(2026, 8, 10),
+        ),
+    ]
+
+    db.add_all(loans)
+    db.commit()
+
+    print(f"Created {len(users)} users, {len(transactions)} transactions, and {len(loans)} loan applications")
     db.close()
 
 
