@@ -21,7 +21,13 @@ export default function ProfilePage() {
       return;
     }
 
-    setUser(JSON.parse(userData));
+    const parsedUser = JSON.parse(userData);
+    if (parsedUser.role === "bank_admin") {
+      router.push("/bank");
+      return;
+    }
+
+    setUser(parsedUser);
     setLoading(false);
   }, []);
 

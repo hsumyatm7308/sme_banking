@@ -4,14 +4,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { colors } from "@/lib/colors";
 
-const menuItems = [
+const smeMenuItems = [
   { name: "Dashboard", path: "/", icon: "🏠" },
   { name: "Transactions", path: "/transactions", icon: "📋" },
   { name: "Profile", path: "/profile", icon: "👤" },
 ];
 
+const adminMenuItems = [
+  { name: "Bank Dashboard", path: "/bank", icon: "🏦" },
+];
+
 export default function Sidebar({ role }: { role: string }) {
   const pathname = usePathname();
+  const menuItems = role === "bank_admin" ? adminMenuItems : smeMenuItems;
 
   return (
     <aside
@@ -26,7 +31,9 @@ export default function Sidebar({ role }: { role: string }) {
           >
             🏦
           </span>
-          <span style={{ color: colors.textWhite }}>SME Banking</span>
+          <span style={{ color: colors.textWhite }}>
+            {role === "bank_admin" ? "Admin Portal" : "SME Banking"}
+          </span>
         </h1>
       </div>
 
@@ -46,21 +53,6 @@ export default function Sidebar({ role }: { role: string }) {
             <span className="font-medium">{item.name}</span>
           </Link>
         ))}
-
-        {role === "bank_admin" && (
-          <Link
-            href="/bank"
-            className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all"
-            style={{
-              backgroundColor:
-                pathname === "/bank" ? colors.secondary : "transparent",
-              color: colors.textWhite,
-            }}
-          >
-            <span className="text-lg">🏦</span>
-            <span className="font-medium">Bank Admin</span>
-          </Link>
-        )}
       </nav>
     </aside>
   );

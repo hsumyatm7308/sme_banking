@@ -29,7 +29,8 @@ export default function LoginPage() {
 
       localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      router.push("/");
+      const role = response.data.user.role;
+      router.push(role === "bank_admin" ? "/bank" : "/");
     } catch (err: any) {
       setError(err.response?.data?.detail || "Login failed");
     } finally {
