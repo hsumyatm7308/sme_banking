@@ -134,6 +134,7 @@ export default function LoginPage() {
                   style={{
                     borderColor: colors.border,
                     backgroundColor: colors.background,
+                    color: colors.textPrimary,
                   }}
                   onFocus={(e) => (e.target.style.borderColor = colors.primary)}
                   onBlur={(e) => (e.target.style.borderColor = colors.border)}
@@ -157,6 +158,7 @@ export default function LoginPage() {
                   style={{
                     borderColor: colors.border,
                     backgroundColor: colors.background,
+                    color: colors.textPrimary,
                   }}
                   onFocus={(e) => (e.target.style.borderColor = colors.primary)}
                   onBlur={(e) => (e.target.style.borderColor = colors.border)}
